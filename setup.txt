@@ -1,21 +1,23 @@
-so here we are checking the interaction of docker container that they can do:
+So here we are checking the interaction of Docker container that they can do:
 
-1. with www it can communicate with the world wide web from inside the container no setup required
-    it is normal fetching and communication like others api  call example fetch('https://some-api.com/my-data').then(...)
-2. container communicating with local system we container cant directly interact with local system we need to add host.docker.internal in place of local host 
+1. With www, it can communicate with the World Wide Web from inside the container, no setup required, 
+    it is normal fetching and communication like other api  calls. Example fetch('https://some-api.com/my-data') Then (...)
+2. The container communicating with the local system, we cannot directly interact with the local system; we need to add host.docker.internal in place of the local host 
 
 eg fetch('localhost:3000/demo').then(...) this is not going to work for communication
     fetch('host.docker.internal:3000/demo').then(...) this is way it is used for communicating
 
-3. container to container communicaation
- a. Manually find out the IP of the other Container (it may change though)
+3. Container-to-Container Communication
+ a. Manually find out the IP of the other Container (it may change, though)
     eg fetch('host.IP_address of other conatiner:3000/demo').then(...) this is cumbersome approach
- b. using docker newtork the container communicating should be in same network
-    we create the network by docker network create <network name>
+ b. Using Docker network, the containers communicating should be on the same network
+    We create the network by docker network create <network name>
 
-    then we use this network while running the continers but we have to use the conatiner name for communication 
+    Then we use this network while running the container, but we have to use the container name for communication 
 
     eg:  docker run --network my-network --name cont1 my-image
         docker run --network my-network --name cont2 my-other-image
 
-        fetch('cont1/my-data').then(...) // this is using the name of conatiner for communication while communicating
+        fetch('cont1/my-data') then (...) // this is using the name of the container for communication while communicating
+
+Note:- here we need a mongo image to run the container for MongoDB, and Node backend will be run by our custom image from the Docker file
